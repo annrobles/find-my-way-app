@@ -11,6 +11,8 @@ import MapKit
 class ViewController: UIViewController, CLLocationManagerDelegate {
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var showRouteButton: UIButton!
+    @IBOutlet weak var stackView: UIStackView!
+    @IBOutlet weak var transportType: UISegmentedControl!
     
     var locationManager = CLLocationManager()
     var destination: CLLocationCoordinate2D!
@@ -27,12 +29,47 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         mapView.showsUserLocation = true
         mapView.delegate = self
         
-        showRouteButton.isHidden = true
+        stackView.layer.cornerRadius = 5
         
+        showRouteButton.isHidden = true
         addDoubleTap()
     }
     
     @IBAction func drawRoute(_ sender: UIButton) {
+        if self.transportType.selectedSegmentIndex == 1 {
+            drawRoute(transportType:  .walking)
+        }
+        else {
+            drawRoute(transportType:  .automobile)
+        }
+    }
+    
+    @IBAction func zoomOutButtonClicked(sender: UIButton) {
+        let span = MKCoordinateSpan(latitudeDelta: mapView.region.span.latitudeDelta*2, longitudeDelta: mapView.region.span.longitudeDelta*2)
+        let region = MKCoordinateRegion(center: mapView.region.center, span: span)
+
+        mapView.setRegion(region, animated: true)
+    }
+
+    @IBAction func zoomInButtonClicked(sender: UIButton) {
+        let span = MKCoordinateSpan(latitudeDelta: mapView.region.span.latitudeDelta/2, longitudeDelta: mapView.region.span.longitudeDelta/2)
+        let region = MKCoordinateRegion(center: mapView.region.center, span: span)
+
+        mapView.setRegion(region, animated: true)
+    }
+    
+    @IBAction func transportTypeSegmentClicked(_ sender: UISegmentedControl) {
+        if destination != nil {
+            if sender.selectedSegmentIndex == 1 {
+                drawRoute(transportType:  .walking)
+            }
+            else {
+                drawRoute(transportType:  .automobile)
+            }
+        }
+    }
+    
+    func drawRoute(transportType: MKDirectionsTransportType?) {
         mapView.removeOverlays(mapView.overlays)
         
         let sourcePlaceMark = MKPlacemark(coordinate: locationManager.location!.coordinate)
@@ -43,7 +80,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         directionRequest.source = MKMapItem(placemark: sourcePlaceMark)
         directionRequest.destination = MKMapItem(placemark: destinationPlaceMark)
         
-        directionRequest.transportType = .automobile
+        directionRequest.transportType = transportType ?? .automobile
         
         let directions = MKDirections(request: directionRequest)
         directions.calculate { (response, error) in
@@ -90,7 +127,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     func displayLocation(latitude: CLLocationDegrees,
                          longitude: CLLocationDegrees) {
         let latDelta: CLLocationDegrees = 0.05
-        let lngDelta: CLLocationDegrees = 0.05
+        let lngDelta: CLLocationDegrees =  0.05
         
         let span = MKCoordinateSpan(latitudeDelta: latDelta, longitudeDelta: lngDelta)
         let location = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
@@ -123,21 +160,22 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     }
 }
 
-
 extension ViewController: MKMapViewDelegate {
     func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
-        if overlay is MKPolyline {
-            let rendrer = MKPolylineRenderer(overlay: overlay)
-            rendrer.strokeColor = UIColor.systemBlue
-            rendrer.lineWidth = 5
-            return rendrer
-        } else if overlay is MKPolygon {
-            let rendrer = MKPolygonRenderer(overlay: overlay)
-            rendrer.fillColor = UIColor.red.withAlphaComponent(0.5)
-            rendrer.strokeColor = UIColor.systemGreen
-            rendrer.lineWidth = 2
-            return rendrer
+        if self.transportType.selectedSegmentIndex == 0 {
+            let renderer = MKPolylineRenderer(overlay: overlay)
+            renderer.strokeColor = UIColor.systemRed
+            renderer.lineWidth = 5
+            return renderer
         }
+        else {
+            let renderer = MKPolylineRenderer(overlay: overlay)
+            renderer.strokeColor = #colorLiteral(red: 0.1764705926, green: 0.4980392158, blue: 0.7568627596, alpha: 1)
+            renderer.lineWidth = 5
+            renderer.lineDashPattern = [0, 10]
+            return renderer
+        }
+        
         return MKOverlayRenderer()
     }
 }

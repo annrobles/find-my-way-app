@@ -19,32 +19,95 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CLG-m6-WCI">
-                                <rect key="frame" x="0.0" y="47" width="390" height="763"/>
+                                <rect key="frame" x="0.0" y="47" width="390" height="716"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="716" id="yDa-O7-EUY"/>
+                                </constraints>
                                 <standardMapConfiguration key="preferredConfiguration"/>
                             </mapView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tE1-Kw-pU1">
-                                <rect key="frame" x="218" y="648" width="152" height="142"/>
+                                <rect key="frame" x="299" y="771" width="71.333333333333314" height="39"/>
                                 <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="plain" image="direction_icon"/>
+                                <buttonConfiguration key="configuration" style="plain" image="direction_icon" title=" "/>
                                 <connections>
                                     <action selector="drawRoute:" destination="BYZ-38-t0r" eventType="touchUpInside" id="pGc-5U-5Fi"/>
                                 </connections>
                             </button>
+                            <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0vj-Yz-eiQ">
+                                <rect key="frame" x="15.999999999999993" y="771" width="104.33333333333331" height="50"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3qi-Kc-NwD">
+                                        <rect key="frame" x="0.0" y="0.0" width="51.666666666666664" height="50"/>
+                                        <color key="tintColor" systemColor="labelColor"/>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="plain" image="minus" catalog="system" title=" "/>
+                                        <connections>
+                                            <action selector="zoomOutButtonClickedWithSender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="l8U-Zr-Dw7"/>
+                                        </connections>
+                                    </button>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="I4N-aU-OwO">
+                                        <rect key="frame" x="51.666666666666671" y="0.0" width="1" height="50"/>
+                                        <subviews>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zBv-Rt-r9T">
+                                                <rect key="frame" x="0.0" y="10" width="1" height="30"/>
+                                                <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="1" id="Y7N-SM-JDi"/>
+                                                </constraints>
+                                            </view>
+                                        </subviews>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="1" id="7ms-Gb-Zn1"/>
+                                            <constraint firstAttribute="bottom" secondItem="zBv-Rt-r9T" secondAttribute="bottom" constant="10" id="GUt-Y9-mta"/>
+                                            <constraint firstItem="zBv-Rt-r9T" firstAttribute="leading" secondItem="I4N-aU-OwO" secondAttribute="leading" id="cqI-JZ-1Li"/>
+                                            <constraint firstItem="zBv-Rt-r9T" firstAttribute="top" secondItem="I4N-aU-OwO" secondAttribute="top" priority="1" constant="10" id="rPS-9H-Iig"/>
+                                            <constraint firstAttribute="trailing" secondItem="zBv-Rt-r9T" secondAttribute="trailing" id="uIs-Vj-gwE"/>
+                                        </constraints>
+                                    </view>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jzc-SX-7Kn">
+                                        <rect key="frame" x="52.666666666666671" y="0.0" width="51.666666666666671" height="50"/>
+                                        <color key="tintColor" systemColor="labelColor"/>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="plain" image="plus" catalog="system" title=" "/>
+                                        <connections>
+                                            <action selector="zoomInButtonClickedWithSender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="2uI-T1-9Jn"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="0.93925600635762119" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </stackView>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="lJw-cp-jiM">
+                                <rect key="frame" x="128" y="773" width="179" height="32"/>
+                                <segments>
+                                    <segment title="Automobile"/>
+                                    <segment title="Walk"/>
+                                </segments>
+                                <connections>
+                                    <action selector="transportTypeSegmentClicked:" destination="BYZ-38-t0r" eventType="valueChanged" id="Tjy-ga-tI8"/>
+                                </connections>
+                            </segmentedControl>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="tE1-Kw-pU1" secondAttribute="trailing" constant="20" id="9Lu-sb-o3T"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="CLG-m6-WCI" secondAttribute="trailing" id="gRv-Oi-bUb"/>
-                            <constraint firstItem="CLG-m6-WCI" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="i1K-FD-YXU"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="CLG-m6-WCI" secondAttribute="bottom" id="jmA-Wv-53e"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="tE1-Kw-pU1" secondAttribute="bottom" constant="20" id="khj-t3-q2r"/>
-                            <constraint firstItem="CLG-m6-WCI" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="mis-UC-VF3"/>
+                            <constraint firstItem="tE1-Kw-pU1" firstAttribute="top" secondItem="CLG-m6-WCI" secondAttribute="bottom" constant="8" symbolic="YES" id="2wB-Rg-94m"/>
+                            <constraint firstItem="tE1-Kw-pU1" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="C4e-Ri-WIA"/>
+                            <constraint firstItem="lJw-cp-jiM" firstAttribute="top" secondItem="CLG-m6-WCI" secondAttribute="bottom" constant="10" id="Hlp-Ep-RGg"/>
+                            <constraint firstItem="CLG-m6-WCI" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="RFp-AD-G1f"/>
+                            <constraint firstItem="tE1-Kw-pU1" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="299" id="Srb-oK-7H4"/>
+                            <constraint firstItem="0vj-Yz-eiQ" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="Wdj-fm-KJz"/>
+                            <constraint firstItem="0vj-Yz-eiQ" firstAttribute="top" secondItem="tE1-Kw-pU1" secondAttribute="top" id="X4M-Xy-gIq"/>
+                            <constraint firstItem="CLG-m6-WCI" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="Xe3-Pt-3cB"/>
+                            <constraint firstItem="lJw-cp-jiM" firstAttribute="leading" secondItem="0vj-Yz-eiQ" secondAttribute="trailing" constant="7.6666666666666856" id="pC2-m1-pUS"/>
+                            <constraint firstItem="CLG-m6-WCI" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="qaV-Og-vnF"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="mapView" destination="CLG-m6-WCI" id="46x-Rd-PhY"/>
                         <outlet property="showRouteButton" destination="tE1-Kw-pU1" id="tXp-kq-P8J"/>
+                        <outlet property="stackView" destination="0vj-Yz-eiQ" id="aqT-IV-7Ho"/>
+                        <outlet property="transportType" destination="lJw-cp-jiM" id="62N-Wl-6eS"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -53,7 +116,12 @@
         </scene>
     </scenes>
     <resources>
-        <image name="direction_icon" width="128" height="128"/>
+        <image name="direction_icon" width="42.666667938232422" height="42.666667938232422"/>
+        <image name="minus" catalog="system" width="128" height="26"/>
+        <image name="plus" catalog="system" width="128" height="113"/>
+        <systemColor name="labelColor">
+            <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
